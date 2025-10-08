@@ -17,7 +17,7 @@ A web application for browsing and streaming public domain content from Archive.
 
 ## 🚀 Demo
 
-[[Live Demo](#)https://www.infiniteloopers.com/ArchiveInfo/]
+<a href="https://www.infiniteloopers.com/ArchiveInfo/" target="_blank">Live Demo</a>
 
 ## 💻 Usage
 
