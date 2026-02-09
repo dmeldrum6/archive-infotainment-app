@@ -534,6 +534,10 @@
                 <span class="nav-icon">🎙️</span>
                 Podcasts
             </button>
+            <button class="nav-btn" onclick="switchContent('games')">
+                <span class="nav-icon">🕹️</span>
+                Games
+            </button>
         </nav>
 
         <div id="loading" class="loading">
@@ -655,6 +659,21 @@
                     'Science': ['science', 'research'],
                     'History': ['history', 'historical'],
                     'Politics': ['politics', 'political']
+                }
+            },
+            games: {
+                name: 'Games',
+                query: 'mediatype:software AND (collection:internetarcade OR collection:softwarelibrary_msdos_games OR collection:consolelivingroom)',
+                isGames: true,
+                genres: {
+                    'Action': ['action', 'fighting', 'beat em up', 'beat-em-up', 'shooter', 'shooting'],
+                    'Arcade': ['arcade', 'coin-op', 'coin operated'],
+                    'Puzzle': ['puzzle', 'tetris', 'logic', 'brain'],
+                    'Strategy': ['strategy', 'tactical', 'simulation', 'sim'],
+                    'Adventure': ['adventure', 'point and click', 'interactive fiction', 'text adventure'],
+                    'RPG': ['rpg', 'role-playing', 'role playing', 'roleplaying'],
+                    'Sports': ['sports', 'racing', 'football', 'baseball', 'basketball', 'soccer', 'golf', 'tennis'],
+                    'Platformer': ['platform', 'platformer', 'side-scrolling', 'side scrolling']
                 }
             }
         };
@@ -803,7 +822,7 @@
                         ${metaInfo ? `<div class="item-meta">${escapeHtml(metaInfo)}</div>` : ''}
                         <div class="item-description">${escapeHtml(String(description).substring(0, 150))}...</div>
                         <div class="item-actions">
-                            <button class="btn btn-primary" onclick="playItem('${item.identifier}', '${escapeHtml(title).replace(/'/g, "\\'")}', '${type}')">▶ Play</button>
+                            <button class="btn btn-primary" onclick="playItem('${item.identifier}', '${escapeHtml(title).replace(/'/g, "\\'")}', '${type}')">${CONTENT_TYPES[type]?.isGames ? '🕹️ Play Game' : '▶ Play'}</button>
                             <button class="btn btn-secondary" onclick="window.open('https://archive.org/details/${item.identifier}', '_blank')">Details</button>
                         </div>
                     </div>
@@ -814,18 +833,20 @@
         function playItem(identifier, title, type) {
             const modal = document.getElementById('modal');
             const content = document.getElementById('modalContent');
-            
+            const isGame = CONTENT_TYPES[type]?.isGames;
+            const playerHeight = isGame ? '600px' : '500px';
+
             content.innerHTML = `
                 <h2 class="modal-title">${title}</h2>
-                <div class="player-container">
+                <div class="player-container" style="height:${playerHeight}">
                     <iframe src="https://archive.org/embed/${identifier}" allowfullscreen allow="autoplay"></iframe>
                 </div>
-                <div class="modal-meta">Streaming from Archive.org</div>
+                <div class="modal-meta">${isGame ? 'Running in browser via Archive.org emulation' : 'Streaming from Archive.org'}</div>
                 <button class="btn btn-primary" onclick="window.open('https://archive.org/details/${identifier}', '_blank')">
                     View on Archive.org
                 </button>
             `;
-            
+
             modal.classList.add('active');
         }
 
@@ -837,13 +858,14 @@
 
         async function switchContent(type) {
             if (type === currentContentType) return;
-            
+
             currentContentType = type;
-            
+
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            event.target.classList.add('active');
+            const clickedBtn = event.target.closest('.nav-btn');
+            if (clickedBtn) clickedBtn.classList.add('active');
             
             if (!contentData[type]) {
                 document.getElementById('loading').style.display = 'block';
@@ -872,6 +894,12 @@
                 closeModal();
             }
         }
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
 
         const backToTopButton = document.getElementById('backToTop');
         
