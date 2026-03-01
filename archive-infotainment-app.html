@@ -84,10 +84,10 @@
 
         .main-nav {
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
+            grid-template-columns: repeat(9, 1fr);
             gap: 15px;
             margin-bottom: 50px;
-            max-width: 1200px;
+            max-width: 1400px;
             margin-left: auto;
             margin-right: auto;
         }
@@ -147,6 +147,19 @@
             display: block;
         }
 
+        .badge {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.8);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.75em;
+            line-height: 20px;
+            text-align: center;
+            margin-top: 2px;
+        }
+
         .loading {
             text-align: center;
             padding: 100px 20px;
@@ -178,6 +191,70 @@
 
         .content-section.active {
             display: block;
+        }
+
+        .search-bar {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 40px 12px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 25px;
+            color: #a0d8d8;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .search-input::placeholder {
+            color: rgba(160, 216, 216, 0.5);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: rgba(0, 255, 255, 0.6);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            color: #00ffff;
+        }
+
+        .search-input::placeholder {
+            color: rgba(160, 216, 216, 0.5);
+        }
+
+        .search-clear-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #a0d8d8;
+            cursor: pointer;
+            font-size: 1.2em;
+            padding: 4px;
+            display: none;
+            transition: color 0.3s;
+        }
+
+        .search-clear-btn:hover {
+            color: #00ffff;
+        }
+
+        .search-input.active ~ .search-clear-btn {
+            display: block;
+        }
+
+        .search-info {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #7fb3d5;
         }
 
         .genre-tabs {
@@ -313,11 +390,13 @@
 
         .item-actions {
             display: flex;
-            gap: 10px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .btn {
             flex: 1;
+            min-width: 70px;
             padding: 12px;
             border: none;
             border-radius: 8px;
@@ -350,6 +429,51 @@
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(0, 255, 255, 0.4);
             color: #00ffff;
+        }
+
+        .btn-heart {
+            background: none;
+            border: none;
+            color: #a0d8d8;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-heart:hover {
+            color: #ff6b6b;
+            transform: scale(1.2);
+        }
+
+        .btn-heart.favorited {
+            color: #ff6b6b;
+        }
+
+        .load-more-container {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        .error-card {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.5);
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            color: #ff6b6b;
+        }
+
+        .error-card-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .error-card-message {
+            color: #9eb8c5;
+            margin-bottom: 20px;
+            font-size: 0.95em;
         }
 
         .modal {
@@ -409,6 +533,10 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .player-container.game {
+            height: 600px;
         }
 
         .player-container iframe {
@@ -476,20 +604,52 @@
             background: rgba(0, 180, 216, 0.5);
         }
 
+        @media (max-width: 1024px) {
+            .main-nav {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
             .main-nav {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }
-            
+
             .status-bar {
                 flex-direction: column;
                 gap: 10px;
                 text-align: center;
             }
-            
+
             .status-info {
                 flex-direction: column;
                 gap: 5px;
+            }
+
+            .app-title h1 {
+                font-size: 2em;
+            }
+
+            .search-input {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-nav {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .app-container {
+                padding: 20px;
+            }
+
+            .item-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                min-width: unset;
             }
         }
     </style>
@@ -510,33 +670,43 @@
         </div>
 
         <nav class="main-nav" id="mainNav">
-            <button class="nav-btn active" onclick="switchContent('movies')">
+            <button class="nav-btn active" data-type="movies">
                 <span class="nav-icon">🎬</span>
                 Movies
             </button>
-            <button class="nav-btn" onclick="switchContent('tv')">
+            <button class="nav-btn" data-type="tv">
                 <span class="nav-icon">📺</span>
                 TV Shows
             </button>
-            <button class="nav-btn" onclick="switchContent('music')">
+            <button class="nav-btn" data-type="music">
                 <span class="nav-icon">🎵</span>
                 Music
             </button>
-            <button class="nav-btn" onclick="switchContent('audiobooks')">
+            <button class="nav-btn" data-type="audiobooks">
                 <span class="nav-icon">📚</span>
                 Audiobooks
             </button>
-            <button class="nav-btn" onclick="switchContent('radio')">
+            <button class="nav-btn" data-type="radio">
                 <span class="nav-icon">📻</span>
                 Radio
             </button>
-            <button class="nav-btn" onclick="switchContent('podcasts')">
+            <button class="nav-btn" data-type="podcasts">
                 <span class="nav-icon">🎙️</span>
                 Podcasts
             </button>
-            <button class="nav-btn" onclick="switchContent('games')">
+            <button class="nav-btn" data-type="games">
                 <span class="nav-icon">🕹️</span>
                 Games
+            </button>
+            <button class="nav-btn" data-type="favorites">
+                <span class="nav-icon">❤️</span>
+                Favorites
+                <span class="badge" id="favoritesBadge" style="display: none;">0</span>
+            </button>
+            <button class="nav-btn" data-type="recentlyPlayed">
+                <span class="nav-icon">🕐</span>
+                Recent
+                <span class="badge" id="recentBadge" style="display: none;">0</span>
             </button>
         </nav>
 
@@ -558,27 +728,176 @@
     <button id="backToTop" class="back-to-top" onclick="scrollToTop()" title="Back to top">↑</button>
 
     <script>
-        // Update time and date
+        // ============================================================================
+        // UTILITY FUNCTIONS
+        // ============================================================================
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Debounce utility
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // ============================================================================
+        // STORAGE MANAGER - Handle localStorage for favorites and recently played
+        // ============================================================================
+
+        const StorageManager = {
+            FAVORITES_KEY: 'archive_favorites',
+            RECENT_KEY: 'archive_recently_played',
+            MAX_RECENT: 20,
+
+            addFavorite(identifier, itemData) {
+                try {
+                    const favorites = this.getFavorites();
+                    const exists = favorites.find(f => f.identifier === identifier);
+                    if (!exists) {
+                        favorites.push({
+                            identifier,
+                            title: itemData.title,
+                            type: itemData.type,
+                            thumbnail: itemData.thumbnail
+                        });
+                        localStorage.setItem(this.FAVORITES_KEY, JSON.stringify(favorites));
+                        this.updateFavoritesBadge();
+                    }
+                } catch (e) {
+                    console.error('Error adding favorite:', e);
+                }
+            },
+
+            removeFavorite(identifier) {
+                try {
+                    const favorites = this.getFavorites();
+                    const filtered = favorites.filter(f => f.identifier !== identifier);
+                    localStorage.setItem(this.FAVORITES_KEY, JSON.stringify(filtered));
+                    this.updateFavoritesBadge();
+                } catch (e) {
+                    console.error('Error removing favorite:', e);
+                }
+            },
+
+            isFavorite(identifier) {
+                try {
+                    const favorites = this.getFavorites();
+                    return favorites.some(f => f.identifier === identifier);
+                } catch (e) {
+                    return false;
+                }
+            },
+
+            getFavorites() {
+                try {
+                    const data = localStorage.getItem(this.FAVORITES_KEY);
+                    return data ? JSON.parse(data) : [];
+                } catch (e) {
+                    return [];
+                }
+            },
+
+            addToRecentlyPlayed(identifier, itemData) {
+                try {
+                    const recent = this.getRecentlyPlayed();
+                    // Remove if exists (to move to end)
+                    const filtered = recent.filter(r => r.identifier !== identifier);
+                    // Add to end with timestamp
+                    filtered.push({
+                        identifier,
+                        title: itemData.title,
+                        type: itemData.type,
+                        thumbnail: itemData.thumbnail,
+                        timestamp: Date.now()
+                    });
+                    // Cap at MAX_RECENT
+                    if (filtered.length > this.MAX_RECENT) {
+                        filtered.shift();
+                    }
+                    localStorage.setItem(this.RECENT_KEY, JSON.stringify(filtered));
+                    this.updateRecentBadge();
+                } catch (e) {
+                    console.error('Error adding to recent:', e);
+                }
+            },
+
+            getRecentlyPlayed() {
+                try {
+                    const data = localStorage.getItem(this.RECENT_KEY);
+                    return data ? JSON.parse(data) : [];
+                } catch (e) {
+                    return [];
+                }
+            },
+
+            updateFavoritesBadge() {
+                const badge = document.getElementById('favoritesBadge');
+                const count = this.getFavorites().length;
+                if (count > 0) {
+                    badge.textContent = count;
+                    badge.style.display = 'block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            },
+
+            updateRecentBadge() {
+                const badge = document.getElementById('recentBadge');
+                const count = this.getRecentlyPlayed().length;
+                if (count > 0) {
+                    badge.textContent = count;
+                    badge.style.display = 'block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        };
+
+        // Update badges on load
+        document.addEventListener('DOMContentLoaded', () => {
+            StorageManager.updateFavoritesBadge();
+            StorageManager.updateRecentBadge();
+        });
+
+        // ============================================================================
+        // DATE/TIME UPDATE
+        // ============================================================================
+
         function updateDateTime() {
             const now = new Date();
-            const timeStr = now.toLocaleTimeString('en-US', { 
-                hour: '2-digit', 
+            const timeStr = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
                 minute: '2-digit',
-                hour12: true 
+                hour12: true
             });
-            const dateStr = now.toLocaleDateString('en-US', { 
+            const dateStr = now.toLocaleDateString('en-US', {
                 weekday: 'long',
                 month: 'long',
                 day: 'numeric',
                 year: 'numeric'
             });
-            
+
             document.getElementById('currentTime').textContent = timeStr;
             document.getElementById('currentDate').textContent = dateStr;
         }
-        
+
         updateDateTime();
         setInterval(updateDateTime, 1000);
+
+        // ============================================================================
+        // CONTENT CONFIGURATION
+        // ============================================================================
 
         const CONTENT_TYPES = {
             movies: {
@@ -619,7 +938,7 @@
                     'Folk': ['folk', 'acoustic'],
                     'Electronic': ['electronic', 'techno'],
                     'Live Concerts': ['live', 'concert', 'performance'],
-					'Soundtracks': ['soundtrack']
+                    'Soundtracks': ['soundtrack']
                 }
             },
             audiobooks: {
@@ -675,35 +994,87 @@
                     'Sports': ['sports', 'racing', 'football', 'baseball', 'basketball', 'soccer', 'golf', 'tennis'],
                     'Platformer': ['platform', 'platformer', 'side-scrolling', 'side scrolling']
                 }
+            },
+            favorites: {
+                name: 'Favorites',
+                isFavorites: true
+            },
+            recentlyPlayed: {
+                name: 'Recently Played',
+                isRecentlyPlayed: true
             }
         };
 
         let currentContentType = 'movies';
         let contentData = {};
+        let itemsPerGenre = 100;
+        let currentGenre = 'All';
+
+        // ============================================================================
+        // API & DATA FETCHING
+        // ============================================================================
 
         async function fetchContent(type) {
             try {
                 const config = CONTENT_TYPES[type];
+
+                // Handle special collection types
+                if (config.isFavorites) {
+                    const favorites = StorageManager.getFavorites();
+                    contentData[type] = {
+                        items: favorites,
+                        categorized: { 'All': favorites }
+                    };
+                    return contentData[type];
+                }
+
+                if (config.isRecentlyPlayed) {
+                    const recent = StorageManager.getRecentlyPlayed();
+                    contentData[type] = {
+                        items: recent.reverse(),
+                        categorized: { 'All': recent.reverse() }
+                    };
+                    return contentData[type];
+                }
+
+                // Normal API fetch
                 const url = `https://archive.org/advancedsearch.php?q=${encodeURIComponent(config.query)}&fl[]=identifier,title,description,year,subject,creator&sort[]=downloads+desc&rows=500&output=json`;
-                
+
                 const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`API returned ${response.status}`);
+                }
                 const data = await response.json();
-                
+
+                if (!data.response || !data.response.docs || data.response.docs.length === 0) {
+                    contentData[type] = {
+                        items: [],
+                        categorized: { 'All': [] },
+                        noResults: true
+                    };
+                    return contentData[type];
+                }
+
                 contentData[type] = {
                     items: data.response.docs,
                     categorized: categorizeContent(data.response.docs, config.genres)
                 };
-                
+
                 return contentData[type];
             } catch (error) {
                 console.error(`Error fetching ${type}:`, error);
+                contentData[type] = {
+                    items: [],
+                    categorized: {},
+                    error: error.message
+                };
                 return null;
             }
         }
 
         function categorizeContent(items, genreMapping) {
             const categorized = {};
-            
+
             Object.keys(genreMapping).forEach(genre => {
                 categorized[genre] = [];
             });
@@ -715,7 +1086,7 @@
                     subjects = [subjects];
                 }
                 const subjectsLower = subjects.map(s => String(s).toLowerCase());
-                
+
                 for (const [genre, keywords] of Object.entries(genreMapping)) {
                     for (const keyword of keywords) {
                         if (subjectsLower.some(subject => subject.includes(keyword))) {
@@ -729,68 +1100,207 @@
             return categorized;
         }
 
+        // ============================================================================
+        // SEARCH & FILTER
+        // ============================================================================
+
+        function filterItems(items, query) {
+            if (!query || query.trim().length < 3) {
+                return items;
+            }
+
+            const q = query.toLowerCase();
+            return items.filter(item => {
+                const title = (item.title || '').toLowerCase();
+                const description = (item.description || '').toLowerCase();
+                let subject = (item.subject || '');
+                if (Array.isArray(subject)) {
+                    subject = subject.join(' ').toLowerCase();
+                } else {
+                    subject = String(subject).toLowerCase();
+                }
+
+                return title.includes(q) || description.includes(q) || subject.includes(q);
+            });
+        }
+
+        const handleSearch = debounce(function(type) {
+            const searchInput = document.getElementById(`searchInput-${type}`);
+            if (!searchInput) return;
+
+            const query = searchInput.value.trim();
+            showGenre(type, currentGenre, query);
+        }, 400);
+
+        // ============================================================================
+        // RENDERING
+        // ============================================================================
+
         function renderContent(type) {
             const container = document.getElementById('contentContainer');
             const data = contentData[type];
-            
+
             if (!data) {
                 container.innerHTML = '<div class="error">Failed to load content. Please try again.</div>';
                 return;
             }
 
-            const config = CONTENT_TYPES[type];
-            const genres = ['All', ...Object.keys(config.genres)];
-            
-            let html = `
-                <div class="content-section active">
-                    <div class="genre-tabs" id="genreTabs-${type}">
-            `;
-            
-            genres.forEach(genre => {
-                const count = data.categorized[genre]?.length || 0;
-                if (count > 0) {
-                    html += `<button class="genre-tab ${genre === 'All' ? 'active' : ''}" onclick="showGenre('${type}', '${genre}')">${genre} (${count})</button>`;
-                }
-            });
-            
-            html += `
+            if (data.error) {
+                container.innerHTML = `
+                    <div class="error-card">
+                        <div class="error-card-title">⚠️ Error Loading Content</div>
+                        <div class="error-card-message">${escapeHtml(data.error)}</div>
+                        <button class="btn btn-primary" onclick="retryFetch('${type}')">🔄 Retry</button>
                     </div>
-                    <div id="itemsContainer-${type}"></div>
-                </div>
-            `;
-            
-            container.innerHTML = html;
-            showGenre(type, 'All');
-            
-            // Setup lazy loading after content is rendered
-            setTimeout(setupLazyLoading, 100);
-        }
-
-        function showGenre(type, genre) {
-            const tabs = document.querySelectorAll(`#genreTabs-${type} .genre-tab`);
-            tabs.forEach(tab => {
-                tab.classList.toggle('active', tab.textContent.startsWith(genre));
-            });
-
-            const container = document.getElementById(`itemsContainer-${type}`);
-            const items = contentData[type].categorized[genre] || [];
-            
-            if (items.length === 0) {
-                container.innerHTML = '<div class="no-content">No content found in this category</div>';
+                `;
                 return;
             }
 
+            if (data.noResults) {
+                container.innerHTML = '<div class="no-content">⚠️ No results available for this category</div>';
+                return;
+            }
+
+            const config = CONTENT_TYPES[type];
+            const isFavoritesOrRecent = config.isFavorites || config.isRecentlyPlayed;
+
+            let html = `
+                <div class="content-section active">
+            `;
+
+            // Search bar
+            html += `
+                <div class="search-bar">
+                    <div style="position: relative; display: inline-block; width: 100%; max-width: 500px;">
+                        <input type="text"
+                               id="searchInput-${type}"
+                               class="search-input"
+                               placeholder="Search ${config.name.toLowerCase()}..."
+                               oninput="handleSearch('${type}')">
+                        <button class="search-clear-btn" onclick="clearSearch('${type}')">✕</button>
+                    </div>
+                    <div class="search-info" id="searchInfo-${type}"></div>
+                </div>
+            `;
+
+            // Genre tabs (skip for favorites/recent)
+            if (!isFavoritesOrRecent) {
+                const genres = ['All', ...Object.keys(config.genres)];
+                html += `<div class="genre-tabs" id="genreTabs-${type}">`;
+
+                genres.forEach(genre => {
+                    const count = data.categorized[genre]?.length || 0;
+                    if (count > 0) {
+                        html += `<button class="genre-tab ${genre === 'All' ? 'active' : ''}" data-genre="${genre}" data-type="${type}">${genre} (${count})</button>`;
+                    }
+                });
+
+                html += `</div>`;
+            }
+
+            html += `
+                    <div id="itemsContainer-${type}"></div>
+                </div>
+            `;
+
+            container.innerHTML = html;
+
+            // Attach genre tab listeners
+            if (!isFavoritesOrRecent) {
+                document.querySelectorAll(`#genreTabs-${type} .genre-tab`).forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const genre = tab.getAttribute('data-genre');
+                        document.querySelectorAll(`#genreTabs-${type} .genre-tab`).forEach(t => {
+                            t.classList.remove('active');
+                        });
+                        tab.classList.add('active');
+                        currentGenre = genre;
+                        showGenre(type, genre);
+                    });
+                });
+            }
+
+            currentGenre = 'All';
+            itemsPerGenre = 100;
+            showGenre(type, 'All');
+            setupLazyLoading();
+        }
+
+        function showGenre(type, genre, searchQuery = '') {
+            const container = document.getElementById(`itemsContainer-${type}`);
+            if (!container) return;
+
+            const data = contentData[type];
+            let items = data.categorized[genre] || [];
+
+            // Apply search filter if query provided
+            if (searchQuery) {
+                items = filterItems(items, searchQuery);
+            }
+
+            if (items.length === 0) {
+                container.innerHTML = searchQuery
+                    ? `<div class="no-content">No results for "${escapeHtml(searchQuery)}" in ${genre}</div>`
+                    : '<div class="no-content">No content found in this category</div>';
+                return;
+            }
+
+            // Update search info
+            const searchInfo = document.getElementById(`searchInfo-${type}`);
+            if (searchInfo) {
+                if (searchQuery) {
+                    searchInfo.textContent = `${items.length} result${items.length !== 1 ? 's' : ''} for "${escapeHtml(searchQuery)}"`;
+                } else {
+                    searchInfo.textContent = '';
+                }
+            }
+
             let html = '<div class="items-grid">';
-            
-            items.slice(0, 100).forEach(item => {
+
+            // Render items up to current limit
+            items.slice(0, itemsPerGenre).forEach(item => {
                 html += createItemCard(item, type);
             });
-            
+
             html += '</div>';
+
+            // Add Load More button if applicable
+            if (items.length > itemsPerGenre) {
+                html += `
+                    <div class="load-more-container">
+                        <button class="btn btn-secondary" onclick="loadMoreItems('${type}', '${genre}')">
+                            📥 Load More (${items.length - itemsPerGenre} remaining)
+                        </button>
+                    </div>
+                `;
+            }
+
             container.innerHTML = html;
-            
-            // Re-setup lazy loading for new images
-            setTimeout(setupLazyLoading, 100);
+            setupLazyLoading();
+        }
+
+        function loadMoreItems(type, genre) {
+            itemsPerGenre += 100;
+            const searchInput = document.getElementById(`searchInput-${type}`);
+            const searchQuery = searchInput ? searchInput.value.trim() : '';
+            showGenre(type, genre, searchQuery);
+
+            // Smooth scroll to load more button
+            setTimeout(() => {
+                const button = document.querySelector(`[onclick*="loadMoreItems('${type}']`);
+                if (button) {
+                    button.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }, 100);
+        }
+
+        function clearSearch(type) {
+            const searchInput = document.getElementById(`searchInput-${type}`);
+            if (searchInput) {
+                searchInput.value = '';
+                searchInput.classList.remove('active');
+                handleSearch(type);
+            }
         }
 
         function createItemCard(item, type) {
@@ -798,22 +1308,23 @@
             const title = item.title || 'Untitled';
             const year = item.year || '';
             const creator = item.creator || '';
-            const description = item.description ? 
-                (Array.isArray(item.description) ? item.description[0] : item.description) : 
+            const description = item.description ?
+                (Array.isArray(item.description) ? item.description[0] : item.description) :
                 'No description available';
-            
+
+            const isFavorited = StorageManager.isFavorite(item.identifier);
+
             let metaInfo = '';
             if (year) metaInfo += `${year}`;
             if (creator && type === 'music') metaInfo += ` • ${Array.isArray(creator) ? creator[0] : creator}`;
-            
+
             return `
                 <div class="item-card">
                     <div class="thumbnail-wrapper" id="thumb-${item.identifier}">
-                        <img src="${thumbnail}" 
-                             alt="${title}" 
-                             class="item-thumbnail" 
+                        <img data-src="${thumbnail}"
+                             alt="${title}"
+                             class="item-thumbnail"
                              loading="lazy"
-                             data-src="${thumbnail}"
                              data-retry-count="0"
                              onerror="handleImageError(this)">
                     </div>
@@ -822,23 +1333,84 @@
                         ${metaInfo ? `<div class="item-meta">${escapeHtml(metaInfo)}</div>` : ''}
                         <div class="item-description">${escapeHtml(String(description).substring(0, 150))}...</div>
                         <div class="item-actions">
-                            <button class="btn btn-primary" onclick="playItem('${item.identifier}', '${escapeHtml(title).replace(/'/g, "\\'")}', '${type}')">${CONTENT_TYPES[type]?.isGames ? '🕹️ Play Game' : '▶ Play'}</button>
+                            <button class="btn btn-primary" data-identifier="${item.identifier}" data-title="${escapeHtml(title)}" data-type="${type}" onclick="playItemFromCard(event)">
+                                ${CONTENT_TYPES[type]?.isGames ? '🕹️ Play' : '▶ Play'}
+                            </button>
                             <button class="btn btn-secondary" onclick="window.open('https://archive.org/details/${item.identifier}', '_blank')">Details</button>
+                            <button class="btn-heart ${isFavorited ? 'favorited' : ''}"
+                                    title="${isFavorited ? 'Remove from favorites' : 'Add to favorites'}"
+                                    onclick="toggleFavorite(event, '${item.identifier}', ${JSON.stringify({
+                                        title: title,
+                                        type: type,
+                                        thumbnail: thumbnail
+                                    }).replace(/'/g, '&quot;')})"
+                                    style="padding: 12px;">
+                                ${isFavorited ? '❤️' : '♡'}
+                            </button>
                         </div>
                     </div>
                 </div>
             `;
         }
 
+        // ============================================================================
+        // FAVORITES & RECENTLY PLAYED
+        // ============================================================================
+
+        function toggleFavorite(event, identifier, itemData) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (StorageManager.isFavorite(identifier)) {
+                StorageManager.removeFavorite(identifier);
+            } else {
+                StorageManager.addFavorite(identifier, itemData);
+            }
+
+            // Update button appearance
+            const btn = event.target.closest('.btn-heart');
+            if (btn) {
+                btn.classList.toggle('favorited');
+                btn.textContent = btn.classList.contains('favorited') ? '❤️' : '♡';
+                btn.title = btn.classList.contains('favorited')
+                    ? 'Remove from favorites'
+                    : 'Add to favorites';
+            }
+        }
+
+        function playItemFromCard(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            const btn = event.target.closest('.btn-primary');
+            const identifier = btn.getAttribute('data-identifier');
+            const title = btn.getAttribute('data-title');
+            const type = btn.getAttribute('data-type');
+
+            playItem(identifier, title, type);
+        }
+
+        // ============================================================================
+        // MODAL & PLAYBACK
+        // ============================================================================
+
         function playItem(identifier, title, type) {
+            // Track in recently played
+            StorageManager.addToRecentlyPlayed(identifier, {
+                title: title,
+                type: type,
+                identifier: identifier,
+                thumbnail: `https://archive.org/services/img/${identifier}`
+            });
+
             const modal = document.getElementById('modal');
             const content = document.getElementById('modalContent');
             const isGame = CONTENT_TYPES[type]?.isGames;
-            const playerHeight = isGame ? '600px' : '500px';
+            const playerClass = isGame ? 'game' : '';
 
             content.innerHTML = `
-                <h2 class="modal-title">${title}</h2>
-                <div class="player-container" style="height:${playerHeight}">
+                <h2 class="modal-title">${escapeHtml(title)}</h2>
+                <div class="player-container ${playerClass}">
                     <iframe src="https://archive.org/embed/${identifier}" allowfullscreen allow="autoplay"></iframe>
                 </div>
                 <div class="modal-meta">${isGame ? 'Running in browser via Archive.org emulation' : 'Streaming from Archive.org'}</div>
@@ -856,59 +1428,88 @@
             document.getElementById('modalContent').innerHTML = '';
         }
 
+        // ============================================================================
+        // NAVIGATION
+        // ============================================================================
+
         async function switchContent(type) {
             if (type === currentContentType) return;
 
             currentContentType = type;
+            itemsPerGenre = 100;
+            currentGenre = 'All';
 
+            // Update active nav button
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            const clickedBtn = event.target.closest('.nav-btn');
-            if (clickedBtn) clickedBtn.classList.add('active');
-            
+            document.querySelector(`[data-type="${type}"]`).classList.add('active');
+
+            // Fetch if not already cached
             if (!contentData[type]) {
                 document.getElementById('loading').style.display = 'block';
                 document.getElementById('contentContainer').innerHTML = '';
-                
+
                 await fetchContent(type);
-                
+
                 document.getElementById('loading').style.display = 'none';
             }
-            
+
             renderContent(type);
-            
-            // Setup lazy loading for new content
-            setTimeout(setupLazyLoading, 100);
         }
 
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+        function retryFetch(type) {
+            contentData[type] = null;
+            switchContent(type);
         }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('modal');
-            if (event.target === modal) {
-                closeModal();
-            }
-        }
+        // ============================================================================
+        // EVENT LISTENERS
+        // ============================================================================
 
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup nav button listeners
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const type = btn.getAttribute('data-type');
+                    switchContent(type);
+                });
+            });
 
-        const backToTopButton = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopButton.classList.add('visible');
-            } else {
-                backToTopButton.classList.remove('visible');
-            }
+            // Modal close on backdrop click
+            document.getElementById('modal').addEventListener('click', (e) => {
+                if (e.target.id === 'modal') {
+                    closeModal();
+                }
+            });
+
+            // Modal close on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+
+            // Search input styling
+            document.addEventListener('input', (e) => {
+                if (e.target.classList.contains('search-input')) {
+                    if (e.target.value.trim().length > 0) {
+                        e.target.classList.add('active');
+                    } else {
+                        e.target.classList.remove('active');
+                    }
+                }
+            });
         });
 
         function scrollToTop() {
@@ -918,19 +1519,21 @@
             });
         }
 
-        // Image loading with retry logic
+        // ============================================================================
+        // IMAGE LOADING & LAZY LOADING
+        // ============================================================================
+
         function handleImageError(img) {
             const retryCount = parseInt(img.getAttribute('data-retry-count')) || 0;
             const maxRetries = 3;
-            
+
             if (retryCount < maxRetries) {
-                // Retry loading after a delay
                 setTimeout(() => {
                     img.setAttribute('data-retry-count', retryCount + 1);
-                    img.src = img.getAttribute('data-src') + '?retry=' + retryCount;
-                }, 1000 * (retryCount + 1)); // Exponential backoff: 1s, 2s, 3s
+                    const src = img.getAttribute('data-src');
+                    img.src = src + (src.includes('?') ? '&' : '?') + 'retry=' + retryCount;
+                }, 1000 * (retryCount + 1));
             } else {
-                // Max retries reached, show manual retry button
                 const wrapper = img.parentElement;
                 if (!wrapper.querySelector('.thumbnail-retry')) {
                     const retryBtn = document.createElement('button');
@@ -939,7 +1542,8 @@
                     retryBtn.onclick = function(e) {
                         e.stopPropagation();
                         img.setAttribute('data-retry-count', '0');
-                        img.src = img.getAttribute('data-src') + '?manual=' + Date.now();
+                        const src = img.getAttribute('data-src');
+                        img.src = src + (src.includes('?') ? '&' : '?') + 'manual=' + Date.now();
                         retryBtn.remove();
                     };
                     wrapper.appendChild(retryBtn);
@@ -955,25 +1559,29 @@
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             const img = entry.target;
-                            // Add small random delay to stagger loads
                             setTimeout(() => {
-                                if (img.getAttribute('data-src')) {
-                                    img.src = img.getAttribute('data-src');
+                                const src = img.getAttribute('data-src');
+                                if (src && !img.src) {
+                                    img.src = src;
                                 }
                             }, Math.random() * 200);
                             observer.unobserve(img);
                         }
                     });
                 }, {
-                    rootMargin: '50px' // Start loading slightly before entering viewport
+                    rootMargin: '50px'
                 });
 
-                // Observe all images with loading="lazy"
-                document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                // Observe all images without src
+                document.querySelectorAll('img[data-src]:not([src])').forEach(img => {
                     imageObserver.observe(img);
                 });
             }
         }
+
+        // ============================================================================
+        // INITIALIZATION
+        // ============================================================================
 
         async function init() {
             await fetchContent('movies');
